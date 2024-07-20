@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>novick - Technical Blog</title>
+    <title>novick - blog</title>
     <link rel="stylesheet" href="styles.css">
 
     <style>
@@ -61,16 +61,46 @@
             z-index: 1;
         }
 
-        article {
+        .year-container {
+            display: flex;
             margin-bottom: 2rem;
+        }
+
+        .year {
+            font-size: 2rem;
+            font-weight: bold;
+            width: 100px;
+            padding-top: 1rem;
+            margin-right: 2rem; /* Added spacing between year and articles */
+        }
+
+        .articles-container {
+            flex-grow: 1;
+        }
+
+        article {
+            margin-bottom: 1rem;
             padding: 1rem;
-            border: 1px solid #333;
             border-radius: 5px;
             background-color: rgba(6, 6, 6, 0.8);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .article-content {
+            flex-grow: 1;
+        }
+
+        .article-date {
+            font-size: 0.9rem;
+            color: #aaa;
+            width: 140px;
+            text-align: right;
         }
 
         h2 {
             color: #ddd;
+            margin-top: 0;
         }
 
         a {
@@ -83,37 +113,59 @@
         }
     </style>
 </head>
+
 <body>
     <div class="canvas-container">
         <canvas id="solarSystem"></canvas>
     </div>
     <header>
         <h1>novick</h1>
-        <p class="subtitle">A Technical Blog</p>
+        <p class="subtitle">a technical blog</p>
     </header>
     <main>
         <section id="blogPosts">
-            <article>
-                <h2>My First Blog Post</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                <a href="#">Read more</a>
-            </article>
-            <article>
-                <h2>Thoughts on Web Development</h2>
-                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                <a href="#">Read more</a>
-            </article>
-            <!-- Add more articles to create scrollable content -->
-            <article>
-                <h2>The Future of AI</h2>
-                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                <a href="#">Read more</a>
-            </article>
-            <article>
-                <h2>Cybersecurity Best Practices</h2>
-                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                <a href="#">Read more</a>
-            </article>
+            <div class="year-container">
+                <div class="year">2023</div>
+                <div class="articles-container">
+                    <article>
+                        <div class="article-content">
+                            <h2>My First Blog Post</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                            <a href="#">Read more</a>
+                        </div>
+                        <div class="article-date">May 15, 2023</div>
+                    </article>
+                    <article>
+                        <div class="article-content">
+                            <h2>Thoughts on Web Development</h2>
+                            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                            <a href="#">Read more</a>
+                        </div>
+                        <div class="article-date">April 2, 2023</div>
+                    </article>
+                </div>
+            </div>
+            <div class="year-container">
+                <div class="year">2022</div>
+                <div class="articles-container">
+                    <article>
+                        <div class="article-content">
+                            <h2>The Future of AI</h2>
+                            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                            <a href="#">Read more</a>
+                        </div>
+                        <div class="article-date">Dec 10, 2022</div>
+                    </article>
+                    <article>
+                        <div class="article-content">
+                            <h2>Cybersecurity Best Practices</h2>
+                            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                            <a href="#">Read more</a>
+                        </div>
+                        <div class="article-date">Nov 5, 2022</div>
+                    </article>
+                </div>
+            </div>
         </section>
     </main>
 
