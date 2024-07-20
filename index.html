@@ -173,17 +173,19 @@
         const canvas = document.getElementById('solarSystem');
         const ctx = canvas.getContext('2d');
 
-        const sun = { radius: 3, color: '#FDB813' };
+        const sun = { radius: 3, color: '#FDB813', mass: 1.989e30 };
         const planets = [
-            { name: 'Mercury', radius: 0.383, color: '#8A7F80', orbitRadius: 58.05, speed: 0.04787 },
-            { name: 'Venus', radius: 0.949, color: '#E39E1C', orbitRadius: 108.45, speed: 0.03502 },
-            { name: 'Earth', radius: 1, color: '#4ECDC4', orbitRadius: 150, speed: 0.02978 },
-            { name: 'Mars', radius: 0.532, color: '#FF6B6B', orbitRadius: 228.6, speed: 0.02407 }
+            { name: 'Mercury', radius: 0.383, color: '#8A7F80', orbitRadius: 58.05, mass: 3.285e23 },
+            { name: 'Venus', radius: 0.949, color: '#E39E1C', orbitRadius: 108.45, mass: 4.867e24 },
+            { name: 'Earth', radius: 1, color: '#4ECDC4', orbitRadius: 150, mass: 5.972e24 },
+            { name: 'Mars', radius: 0.532, color: '#FF6B6B', orbitRadius: 228.6, mass: 6.39e23 },
         ];
 
+        const G = 6.67430e-11; // gravitational constant
         const scaleFactor = 10;
         const orbitScaleFactor = 1.5;
         const viewAngle = 20 * Math.PI / 180;
+        const timeScale = 3e4;
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
@@ -203,18 +205,21 @@
 
             for (let planet of [sun, ...planets].sort((a, b) => a.y - b.y)) {
                 // draw orbit
-                ctx.beginPath();
-                ctx.ellipse(sun.x, sun.y, planet.orbitRadius * orbitScaleFactor, planet.orbitRadius * orbitScaleFactor * Math.sin(viewAngle), 0, 0, Math.PI * 2);
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
-                ctx.stroke();
+                if (planet.orbitRadius) {
+                    ctx.beginPath();
+                    ctx.ellipse(sun.x, sun.y, planet.orbitRadius * orbitScaleFactor, planet.orbitRadius * orbitScaleFactor * Math.sin(viewAngle), 0, 0, Math.PI * 2);
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+                    ctx.stroke();
+                }
 
                 // set planet position
                 if (planet.orbitRadius) {
                     const x = Math.sin(planet.angle) * planet.orbitRadius * orbitScaleFactor;
                     const y = Math.cos(planet.angle) * planet.orbitRadius * orbitScaleFactor;
+                    const r = planet.orbitRadius * 1e9; // convert to meters
                     planet.x = sun.x + x;
                     planet.y = sun.y + y * Math.sin(viewAngle);
-                    planet.angle = (planet.angle || 0) + planet.speed * 0.1;
+                    planet.angle = (planet.angle || Math.random()) + Math.sqrt(G * sun.mass / r) / (planet.orbitRadius * 1e9) * timeScale;
                 } else {
                     planet.x = planet.x;
                     planet.y = planet.y;
