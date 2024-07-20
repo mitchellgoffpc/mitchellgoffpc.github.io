@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Personal Blog</title>
+    <title>novick - Technical Blog</title>
     <link rel="stylesheet" href="styles.css">
 
     <style>
@@ -20,28 +20,45 @@
 
         header {
             margin-top: 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-family: 'Arial', sans-serif;
+            font-size: 3rem;
+            font-weight: normal;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #aaa;
         }
 
         .canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            display: flex;
-            justify-content: center;
-            margin: 2rem 0;
+            height: 100%;
+            z-index: 0;
         }
 
         canvas {
-            max-width: 100%;
+            width: 100%;
+            height: 100%;
         }
 
         #blogPosts {
             max-width: 800px;
             width: 100%;
+            margin-top: 600px;
             padding: 0 1rem;
             box-sizing: border-box;
+            position: relative;
+            z-index: 1;
         }
 
         article {
@@ -49,6 +66,7 @@
             padding: 1rem;
             border: 1px solid #333;
             border-radius: 5px;
+            background-color: rgba(6, 6, 6, 0.8);
         }
 
         h2 {
@@ -66,13 +84,14 @@
     </style>
 </head>
 <body>
+    <div class="canvas-container">
+        <canvas id="solarSystem"></canvas>
+    </div>
     <header>
-        <h1>A Personal Blog</h1>
+        <h1>novick</h1>
+        <p class="subtitle">A Technical Blog</p>
     </header>
     <main>
-        <div class="canvas-container">
-            <canvas id="solarSystem"></canvas>
-        </div>
         <section id="blogPosts">
             <article>
                 <h2>My First Blog Post</h2>
@@ -82,6 +101,17 @@
             <article>
                 <h2>Thoughts on Web Development</h2>
                 <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <a href="#">Read more</a>
+            </article>
+            <!-- Add more articles to create scrollable content -->
+            <article>
+                <h2>The Future of AI</h2>
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                <a href="#">Read more</a>
+            </article>
+            <article>
+                <h2>Cybersecurity Best Practices</h2>
+                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                 <a href="#">Read more</a>
             </article>
         </section>
@@ -102,13 +132,26 @@
         const scaleFactor = 10;
         const orbitScaleFactor = 1.5;
 
-        canvas.height = 400;
-        canvas.width = 800;
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            sun.x = canvas.width / 2;
+            sun.y = canvas.height / 2;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
 
         const viewAngle = 20 * Math.PI / 180;
 
         function drawSolarSystem() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const scrollPosition = window.pageYOffset;
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            const opacity = 1 - Math.min(scrollPosition / maxScroll, 0.9);
+
+            ctx.globalAlpha = opacity;
 
             for (let planet of [sun, ...planets].sort((a, b) => a.y - b.y)) {
                 // draw orbit
