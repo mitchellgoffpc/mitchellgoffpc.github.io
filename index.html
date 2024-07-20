@@ -54,7 +54,7 @@
         #blogPosts {
             max-width: 800px;
             width: 100%;
-            margin-top: 600px;
+            margin-top: 400px;
             padding: 0 1rem;
             box-sizing: border-box;
             position: relative;
@@ -121,7 +121,7 @@
         const canvas = document.getElementById('solarSystem');
         const ctx = canvas.getContext('2d');
 
-        const sun = { x: 400, y: 200, radius: 3, color: '#FDB813' };
+        const sun = { radius: 3, color: '#FDB813' };
         const planets = [
             { name: 'Mercury', radius: 0.383, color: '#8A7F80', orbitRadius: 58.05, speed: 0.04787 },
             { name: 'Venus', radius: 0.949, color: '#E39E1C', orbitRadius: 108.45, speed: 0.03502 },
@@ -131,18 +131,14 @@
 
         const scaleFactor = 10;
         const orbitScaleFactor = 1.5;
+        const viewAngle = 20 * Math.PI / 180;
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             sun.x = canvas.width / 2;
-            sun.y = canvas.height / 2;
+            sun.y = 350;
         }
-
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        const viewAngle = 20 * Math.PI / 180;
 
         function drawSolarSystem() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -182,6 +178,8 @@
             requestAnimationFrame(drawSolarSystem)
         }
 
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
         drawSolarSystem();
     </script>
 </body>
