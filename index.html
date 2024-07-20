@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Personal Blog</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #060606;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            margin-top: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+        }
+
+        .canvas-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+
+        canvas {
+            max-width: 100%;
+        }
+
+        #blogPosts {
+            max-width: 800px;
+            width: 100%;
+            padding: 0 1rem;
+            box-sizing: border-box;
+        }
+
+        article {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border: 1px solid #333;
+            border-radius: 5px;
+        }
+
+        h2 {
+            color: #ddd;
+        }
+
+        a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>A Personal Blog</h1>
+    </header>
+    <main>
+        <div class="canvas-container">
+            <canvas id="solarSystem"></canvas>
+        </div>
+        <section id="blogPosts">
+            <article>
+                <h2>My First Blog Post</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <a href="#">Read more</a>
+            </article>
+            <article>
+                <h2>Thoughts on Web Development</h2>
+                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <a href="#">Read more</a>
+            </article>
+        </section>
+    </main>
+
+    <script>
+        const canvas = document.getElementById('solarSystem');
+        const ctx = canvas.getContext('2d');
+
+        const sun = { x: 400, y: 200, radius: 3, color: '#FDB813' };
+        const planets = [
+            { name: 'Mercury', radius: 0.383, color: '#8A7F80', orbitRadius: 58.05, speed: 0.04787 },
+            { name: 'Venus', radius: 0.949, color: '#E39E1C', orbitRadius: 108.45, speed: 0.03502 },
+            { name: 'Earth', radius: 1, color: '#4ECDC4', orbitRadius: 150, speed: 0.02978 },
+            { name: 'Mars', radius: 0.532, color: '#FF6B6B', orbitRadius: 228.6, speed: 0.02407 }
+        ];
+
+        const scaleFactor = 10;
+        const orbitScaleFactor = 1.5;
+
+        canvas.height = 400;
+        canvas.width = 800;
+
+        const viewAngle = 20 * Math.PI / 180;
+
+        function drawSolarSystem() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let planet of [sun, ...planets].sort((a, b) => a.y - b.y)) {
+                // draw orbit
+                ctx.beginPath();
+                ctx.ellipse(sun.x, sun.y, planet.orbitRadius * orbitScaleFactor, planet.orbitRadius * orbitScaleFactor * Math.sin(viewAngle), 0, 0, Math.PI * 2);
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+                ctx.stroke();
+
+                // set planet position
+                if (planet.orbitRadius) {
+                    const x = Math.sin(planet.angle) * planet.orbitRadius * orbitScaleFactor;
+                    const y = Math.cos(planet.angle) * planet.orbitRadius * orbitScaleFactor;
+                    planet.x = sun.x + x;
+                    planet.y = sun.y + y * Math.sin(viewAngle);
+                    planet.angle = (planet.angle || 0) + planet.speed * 0.1;
+                } else {
+                    planet.x = planet.x;
+                    planet.y = planet.y;
+                }
+
+                // draw planet
+                ctx.beginPath();
+                ctx.arc(planet.x, planet.y, planet.radius * scaleFactor, 0, Math.PI * 2);
+                ctx.fillStyle = planet.color;
+                ctx.fill();
+            }
+
+            requestAnimationFrame(drawSolarSystem)
+        }
+
+        drawSolarSystem();
+    </script>
+</body>
+</html>
