@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>novick - blog</title>
-    <link rel="stylesheet" href="styles.css">
 
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Montserrat', Arial, sans-serif;
             background-color: #060606;
             color: white;
             margin: 0;
@@ -16,6 +15,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            visibility: hidden;
         }
 
         header {
@@ -26,15 +26,70 @@
         }
 
         h1 {
-            font-family: 'Arial', sans-serif;
-            font-size: 3rem;
+            position: relative;
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-size: 4rem;
             font-weight: normal;
-            margin-bottom: 0.5rem;
+            margin-top: 2rem;
+            margin-bottom: 0;
+            color: #eee;
+        }
+        h1.underline::after {
+            bottom: 0;
         }
 
-        .subtitle {
-            font-size: 1.2rem;
+        h3 {
+            margin: 0.5rem 0 0;
+            font-size: 1.1rem;
+            font-weight: normal;
             color: #aaa;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: normal;
+            color: #ddd;
+        }
+
+        a {
+            color: #eee;
+            text-decoration: none;
+        }
+        a.underline::after {
+            display: none;
+            width: 100%;
+            margin: 0;
+            background-color: #eee;
+        }
+        a.underline:hover::after {
+            display: block;
+        }
+
+        .title { transform: translateX(-0.2rem); }
+
+        .underline {
+            position: relative;
+        }
+        .underline::after {
+            content: '';
+            display: block;
+            position: absolute;
+            bottom: -0.5rem;
+            width: 90%;
+            height: 2px;
+            margin: 0 5%;
+            background-color: var(--accent-color);
+        }
+
+        .mask {
+            position: absolute;
+            top: 0;
+            left: -10%;
+            width: 120%;
+            height: 1.73rem;
+            background-color: #060606;
+            z-index: 2;
         }
 
         .canvas-container {
@@ -51,7 +106,7 @@
             height: 100%;
         }
 
-        #blogPosts {
+        #blog-posts {
             max-width: 800px;
             width: 100%;
             margin-top: 400px;
@@ -64,14 +119,13 @@
         .year-container {
             display: flex;
             margin-bottom: 2rem;
+            align-items: flex-start;
         }
 
         .year {
             font-size: 2rem;
-            font-weight: bold;
-            width: 100px;
-            padding-top: 1rem;
-            margin-right: 2rem; /* Added spacing between year and articles */
+            font-weight: normal;
+            margin-right: 2rem;
         }
 
         .articles-container {
@@ -79,90 +133,73 @@
         }
 
         article {
-            margin-bottom: 1rem;
-            padding: 1rem;
-            border-radius: 5px;
-            background-color: rgba(6, 6, 6, 0.8);
             display: flex;
             justify-content: space-between;
-        }
-
-        .article-content {
-            flex-grow: 1;
+            padding-bottom: 0.5em;
+            margin-bottom: 0.5em;
         }
 
         .article-date {
             font-size: 0.9rem;
             color: #aaa;
-            width: 140px;
+            width: 180px;
             text-align: right;
-        }
-
-        h2 {
-            color: #ddd;
-            margin-top: 0;
-        }
-
-        a {
-            color: #4CAF50;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
         }
     </style>
 </head>
 
 <body>
+    <script>
+        document.fonts.ready.then(() => { document.body.style.visibility = 'visible' });
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
     <div class="canvas-container">
         <canvas id="solarSystem"></canvas>
     </div>
     <header>
-        <h1>novick</h1>
-        <p class="subtitle">a technical blog</p>
+        <h1 class="underline">
+            <div class="title">novick</div>
+            <div class="mask"></div>
+        </h1>
+        <h3>a technical blog</h3>
     </header>
     <main>
-        <section id="blogPosts">
+        <section id="blog-posts">
             <div class="year-container">
-                <div class="year">2023</div>
+                <div class="year underline">2023</div>
                 <div class="articles-container">
                     <article>
                         <div class="article-content">
-                            <h2>My First Blog Post</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                            <a href="#">Read more</a>
+                            <h2><a href="#" class="underline">My First Blog Post</a></h2>
                         </div>
-                        <div class="article-date">May 15, 2023</div>
+                        <div class="article-date">May 15</div>
                     </article>
                     <article>
                         <div class="article-content">
-                            <h2>Thoughts on Web Development</h2>
-                            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                            <a href="#">Read more</a>
+                            <h2><a href="#" class="underline">Thoughts on Web Development</a></h2>
                         </div>
-                        <div class="article-date">April 2, 2023</div>
+                        <div class="article-date">April 2</div>
                     </article>
                 </div>
             </div>
             <div class="year-container">
-                <div class="year">2022</div>
+                <div class="year underline">2022</div>
                 <div class="articles-container">
                     <article>
                         <div class="article-content">
-                            <h2>The Future of AI</h2>
-                            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                            <a href="#">Read more</a>
+                            <h2><a href="#" class="underline">The Future of AI</a></h2>
                         </div>
-                        <div class="article-date">Dec 10, 2022</div>
+                        <div class="article-date">Dec 10</div>
                     </article>
                     <article>
                         <div class="article-content">
-                            <h2>Cybersecurity Best Practices</h2>
-                            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                            <a href="#">Read more</a>
+                            <h2><a href="#" class="underline">Cybersecurity Best Practices</a></h2>
                         </div>
-                        <div class="article-date">Nov 5, 2022</div>
+                        <div class="article-date">Nov 5</div>
                     </article>
                 </div>
             </div>
@@ -176,7 +213,7 @@
         const sun = { radius: 3, color: '#FDB813', mass: 1.989e30 };
         const planets = [
             { name: 'Mercury', radius: 0.383, color: '#8A7F80', orbitRadius: 58.05, mass: 3.285e23 },
-            { name: 'Venus', radius: 0.949, color: '#E39E1C', orbitRadius: 108.45, mass: 4.867e24 },
+            { name: 'Venus', radius: 0.949, color: '#B19CD9', orbitRadius: 108.45, mass: 4.867e24 },
             { name: 'Earth', radius: 1, color: '#4ECDC4', orbitRadius: 150, mass: 5.972e24 },
             { name: 'Mars', radius: 0.532, color: '#FF6B6B', orbitRadius: 228.6, mass: 6.39e23 },
         ];
@@ -191,7 +228,13 @@
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             sun.x = canvas.width / 2;
-            sun.y = 350;
+            sun.y = 370;
+        }
+
+        function setRandomColor() {
+            const colorOptions = [sun.color, ...planets.slice(1).map(planet => planet.color)];
+            const randomColor = colorOptions[Math.floor(Math.random() * colorOptions.length)];
+            document.querySelector('body').style.setProperty('--accent-color', randomColor);
         }
 
         function drawSolarSystem() {
@@ -199,7 +242,7 @@
 
             const scrollPosition = window.pageYOffset;
             const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-            const opacity = 1 - Math.min(scrollPosition / maxScroll, 0.9);
+            const opacity = 1 - Math.min(scrollPosition / maxScroll, 0.95);
 
             ctx.globalAlpha = opacity;
 
@@ -219,7 +262,7 @@
                     const r = planet.orbitRadius * 1e9; // convert to meters
                     planet.x = sun.x + x;
                     planet.y = sun.y + y * Math.sin(viewAngle);
-                    planet.angle = (planet.angle || Math.random()) + Math.sqrt(G * sun.mass / r) / (planet.orbitRadius * 1e9) * timeScale;
+                    planet.angle = (planet.angle || (Math.random() * 2 * Math.PI)) + Math.sqrt(G * sun.mass / r) / (planet.orbitRadius * 1e9) * timeScale;
                 } else {
                     planet.x = planet.x;
                     planet.y = planet.y;
@@ -236,6 +279,7 @@
         }
 
         window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('load', setRandomColor);
         resizeCanvas();
         drawSolarSystem();
     </script>
